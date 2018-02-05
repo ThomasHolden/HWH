@@ -14,7 +14,6 @@ for id in testids:
     driver.get(base_url + id)
     soup = BeautifulSoup(driver.page_source,'lxml')
     table = soup.find('div',{'class':'SectionBody'}).table.tbody.find_all('tr')
-    colname = ''
     rownr = len(df)
     for nnr,i in enumerate(table):
         cols = i.find_all('td')
