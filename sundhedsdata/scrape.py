@@ -1,18 +1,23 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
+import requests
 
 with open('authids.txt') as f:
     testids = f.read().split()
 
 base_url = 'https://autregweb.sst.dk/Authorization.aspx?id='
 
-driver = webdriver.Firefox()
 df = pd.DataFrame()
 
-for id in testids:
-    driver.get(base_url + id)
-    soup = BeautifulSoup(driver.page_source,'lxml')
+progress = 0
+
+for _,id in enumerate(testids):
+    if round(_/len(testids),2)!=progress:
+        print('{:.0%} done'.format(round(_/len(testids),2)))
+        progress = round(_/len(testids),2)
+    source = requests.get(base_url + id).text
+    soup = BeautifulSoup(source,'lxml')
     table = soup.find('div',{'class':'SectionBody'}).table.tbody.find_all('tr')
     rownr = len(df)
     for nnr,i in enumerate(table):
@@ -33,5 +38,4 @@ for id in testids:
 
 print(df)
 df.to_csv('results.csv')
-driver.close()
 
