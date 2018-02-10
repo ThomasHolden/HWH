@@ -14,8 +14,9 @@ def menuvalg():
 3: Indsæt kandidat
 4: Slet kandidat
 5: Sorter kandidater
-6: Vælg kandidat
-7: Afslut
+6: Find kandidat
+7: Vælg kandidat
+8: Afslut
 Valg: ''')
     if int(valg) == 1:
         print('------------Kandidater------------------')
@@ -50,11 +51,18 @@ Valg: ''')
         print('----------------------------------------')
         menuvalg()
     elif int(valg) == 6:
+        print('------------Find kandidat---------------')
+        findkandidat = input('Navn: ')
+        #print(kandidater.index(findkandidat))
+        print('Kandidaten er nummer: ' + str(kandidater.index(findkandidat)+1))
+        print('----------------------------------------')
+        menuvalg()
+    elif int(valg) == 7:
         print('------------Vælg kandidat---------------')
         print('Følgende kandidat er valgt: ' + kandidater[random.randint(0, len(kandidater)-1)])
         print('----------------------------------------')
         menuvalg()
-    elif int(valg) == 7:
+    elif int(valg) == 8:
         print('Tak fordi du valgte HWH software')
     else:
         print('Ugyldigt valg')
